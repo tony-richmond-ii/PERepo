@@ -1,0 +1,63 @@
+/*
+ * The prime factors of 13195 are 5, 7, 13 and 29.
+
+What is the largest prime factor of the number 600851475143 ?
+ */
+
+//strategy: use the square root of the given number as a starting point, and 
+//decrement until a factor is found. Test factor and co-factor for prime.
+
+public class Problem003Revisit {
+		//static double[] primeSieve = new double[];
+	public static void main(String[] args){
+		long startTime = System.currentTimeMillis();
+		double largestPrime = 0;
+		boolean done = false;
+		final double NUM = 600851475143.0;
+		//primeSieve = new double[NUM];
+		double start = 0;
+		do{
+			start++;//starting at 1 allows the co-factor to be large(and stop if it's prime)
+			if(isFactor(start,NUM)){
+				if(isPrime(NUM/start)){
+					largestPrime = NUM/start;
+					done = true;
+				}
+				if(isPrime(start)){
+					largestPrime = start;
+				}
+			}
+			
+		}while(start < Math.sqrt(NUM) && !done);
+		long endTime = System.currentTimeMillis();
+		if(largestPrime == 0){
+			System.out.println("No prime number was found.");
+		}
+		if(largestPrime !=0){
+			System.out.println(largestPrime + " was found in " + (endTime - startTime) + " ms.");		}
+	
+	}
+	
+	private static boolean isPrime(double x){
+		boolean boo = true;
+		if(x % 2 == 0){
+			return false;
+		}
+		int i = 3;
+		while((i < Math.sqrt(x) && (boo))){
+			if(x % i == 0){
+				boo = false;
+			}
+			i+=2;
+		}
+		return boo;
+	}
+	private static boolean isFactor(double x, double y){
+		boolean boo = false;
+		if(y % x == 0){
+			boo = true;
+		}
+		return boo;
+	}
+
+}
