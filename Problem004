@@ -1,0 +1,65 @@
+/*
+ * 
+
+A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+
+Find the largest palindrome made from the product of two 3-digit numbers.
+
+STRATEGY: take number of digits, find largest number with that many 9s. Create two of them, find product. Iterate the first number
+down to zero, finding product at each step and testing for palindrome. If it's a palindrome, check that it is larger than the 
+current largest palindrome. Decrement second number, set first number equal to it, and repeat
+ */
+
+public class Problem004 {
+	public static void main(String[] args){
+		long startTime = System.currentTimeMillis();
+		int num1, num2, candidate;
+		int palindrome = 0;
+		final int NUMDIGITS = 3;				//get number of digits
+		int lowerBound = getMaxNum(NUMDIGITS - 1);
+		num1 = getMaxNum(NUMDIGITS);			//find the largest number with given number of digits
+		num2 = num1;							//both numbers should be largest possible
+		
+		while(num2 > lowerBound){				//second number will decrement to lower bound
+			while(num1 > lowerBound){			//first number will decrement to lower bound
+				candidate = num1 * num2;		//check product of two numbers
+				if(isPalindrome(candidate)){	//check whether product is a palindrome
+					if(candidate > palindrome){	//update current palindrome with larger palindromes
+						palindrome = candidate;
+					}
+				}
+			num1--;
+			}
+		num2--;
+		num1 = num2;							//no need to max out num1, since 999*998 == 998*999
+		}
+		
+		
+		System.out.println(palindrome + " was found in " + (System.currentTimeMillis() - startTime)+ " ms.");
+	}
+	
+	private static int getMaxNum(int x){
+		x = x-1;
+		int maxNum = 0;
+		while(x >= 0){
+			maxNum = maxNum + (int)(9 * Math.pow(10, x));
+			x--;
+		}
+		return maxNum;
+	}
+
+	private static boolean isPalindrome(int x){
+		String str = Integer.toString(x);
+		boolean boo = false;
+		String original, reverse = "";
+	      original = str;
+	      int length = original.length();
+	 
+	      for ( int i = length - 1; i >= 0; i-- )
+	         reverse = reverse + original.charAt(i);
+	 
+	      if (original.equals(reverse))
+	         boo = true;
+	      return boo;
+	}
+}
