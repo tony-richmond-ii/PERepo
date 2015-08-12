@@ -1,0 +1,37 @@
+/*
+ * The sum of the squares of the first ten natural numbers is,
+ * 1^2 + 2^2 + ... + 10^2 = 385
+ * The square of the sum of the first ten natural numbers is,
+ * (1 + 2 + ... + 10)^2 = 552 = 3025
+ * Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is 3025 − 385 = 2640.
+ * Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
+ * 
+ * STRATEGY: Square and sum, then sum and square, take the difference
+ */
+public class Problem006 {
+	private static final int MAXNUMBER = 100;
+		
+	public static void main(String[] args){
+		long startTime = System.currentTimeMillis();
+		System.out.println(squareSum(MAXNUMBER) - sumSquare(MAXNUMBER) + " was found in " + (System.currentTimeMillis() - startTime) + " ms.");
+	}
+		
+	private static int sumSquare(int MAXNUMBER){
+		int sumSquare = 0;
+		for(int i = 1; i <= MAXNUMBER; i++){	//increment over number range
+			sumSquare += i*i;					//keep running total of squares
+		}
+		
+		return sumSquare;
+	}
+	
+	private static int squareSum(int MAXNUMBER){
+		int squareSum = 0;
+		for(int i = 1; i <= MAXNUMBER; i++){	//increment over number range
+			squareSum += i;						//keep running total of sum
+		}
+		squareSum = squareSum * squareSum;		//square the sum
+		return squareSum;
+	}
+
+}
