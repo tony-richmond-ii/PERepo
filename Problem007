@@ -1,0 +1,37 @@
+/*
+ *By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+ *What is the 10 001st prime number?
+ *
+ *STRATEGY: Start at 1, test for prime, increment counter until 10001 primes have been counted
+ */
+public class Problem007 {
+
+	public static void main(String[] args){
+		final long startTime = System.currentTimeMillis();
+		final int WHICHPRIME = 10001;
+		int count = 0;
+		int i = 2;				//starting prime number
+		while(count < WHICHPRIME ){
+			if(isPrime(i)){ 	//identify primes and increment counter
+				count++;
+			}
+			i++;				//increment numbers to test for prime
+		}
+		i--;					//decrement because the highest prime was just incremented in while loop
+		final long endTime = System.currentTimeMillis();
+		System.out.println(i + " was found in " + (endTime - startTime) + " ms.");
+	}
+	
+	private static boolean isPrime(int x){
+		boolean boo = true;
+		if(x == 2){return true;} //2 is prime
+		int i = 2;
+		while((i < (int)Math.sqrt(x)+1 && (boo))){
+			if(x % i == 0){ //check remainders up to the sqrt of x
+				boo = false;
+			}
+			i++;
+		}
+		return boo;
+	}
+}
