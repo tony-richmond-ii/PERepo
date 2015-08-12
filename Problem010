@@ -1,0 +1,43 @@
+/*The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+ *Find the sum of all the primes below two million.
+ * 
+ *Strategy: Use sieve of Eratosthenes and mark prime positions with a 1 
+*/
+public class Problem010 {
+	private final static int MAXNUMBER = 2000000;
+	private static int[] sieve = new int[MAXNUMBER+1]; //sieve of eratosthenes of MAXNUMBER + 1 so index matches number
+	
+	
+	public static void main(String[] args){
+		final long startTime = System.currentTimeMillis();
+		long sum = 0;										//starting sum
+		int num = 2;										//first prime
+		
+		//create sieve of eratosthenes
+		for(int i = 2; i < MAXNUMBER+1; i++){
+			sieve[i]=1;										//mark all places as prime
+		}
+		for(int i = 2; i < Math.sqrt(MAXNUMBER+1); i++){	//iterate over numbers starting at 2
+			for(int j = 2; i*j < MAXNUMBER+1; j++){			//iterate over multiples starting at 2, marking non-primes as 0
+				sieve[i*j]=0;
+			}
+		}
+		
+		
+		while(num < MAXNUMBER){
+			if(isPrime(num)){								//if num is prime, add to the running sum
+				sum += num;
+			}
+			num++;
+		}	
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The sum is: " + sum + " found in " + (endTime - startTime) + " ms.");
+	}
+
+
+	private static boolean isPrime(int x){
+		return sieve[x] == 1;
+	}
+
+}
+
