@@ -1,0 +1,39 @@
+/*
+ *
+ * 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder. * 
+ * What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+ * STRATEGY: Starting with 20, divide by each number from 1:20 and check for remainder. Increment until pass. 
+ *  */
+
+public class Problem005 {
+	private final static int MAXDIVISOR = 20;
+	
+	public static void main(String[] args){
+		long startTime = System.currentTimeMillis();
+		int result = MAXDIVISOR - 1;
+		boolean done = false;
+		while(!done){
+			if(result % 2 == 0){	//Since number will be divisible by two, we skip all odd numbers
+				result+=2;			//Check whether number is even, and increment by two
+			}
+			else result++;				//necessary to ensure we don't check only odd numbers
+			done = checkDivision(result);
+		}
+		System.out.println(result + " was found in " + (System.currentTimeMillis() - startTime) + " ms.");
+	}
+	
+	
+	
+	private static boolean checkDivision(int x){
+		boolean pass = true;
+		int i = MAXDIVISOR;
+		while((pass)&&(i > 1 )){	//check division on each number from max:1 since max
+										//is more likely to fail
+			if(x % i != 0){				//if remainder not 0, exit loop return false
+				pass = false;
+			}
+			i--;
+		}
+		return pass;
+	}
+}
