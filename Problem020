@@ -1,0 +1,38 @@
+/*
+ n! means n × (n − 1) × ... × 3 × 2 × 1
+
+ For example, 10! = 10 × 9 × ... × 3 × 2 × 1 = 3628800,
+ and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
+
+ Find the sum of the digits in the number 100!
+
+ Strategy: Calculate 100!, use mod 10 function to get last digit, one at a time, and sum.
+ */
+
+import java.math.BigInteger;
+
+public class Problem020 {
+    public static void main(String[] args){
+        long startTime = System.currentTimeMillis();
+        final BigInteger NUM = new BigInteger("100");   //double is too small for 100!
+        BigInteger factorial = findFactorial(NUM);
+        BigInteger sum = findSum(factorial);
+        System.out.println(sum + " found in " + (System.currentTimeMillis()-startTime) + " ms.");
+    }
+
+    private static BigInteger findFactorial(BigInteger x){
+
+        if(x.equals(BigInteger.ONE)) return x;              //recursive, stop when final number is 1
+        return (x.multiply(findFactorial(x.subtract(BigInteger.ONE)))); //x*x-1 until x-1 == 1 returns x!
+    }
+
+    private static BigInteger findSum(BigInteger x){
+        BigInteger sum = BigInteger.ZERO;               //BigInteger to avoid converting x to long
+        while(x.compareTo(BigInteger.ZERO) >= 1){       //while x is still a positive integer value
+            sum = sum.add(x.mod(BigInteger.TEN));       //get last digit from x
+            x = x.divide(BigInteger.TEN);               //remove last digit from x by integer division
+        }
+        return sum;
+    }
+
+}
