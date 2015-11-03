@@ -1,0 +1,54 @@
+Sub ThrowDie()
+'This routine will simulate a single die throw and calculate the change in capital
+'Generate a throw value between and including 1 and 6
+Dim throw As Integer
+throw = Int(Rnd() * 6) + 1
+Cells(2, 2) = throw
+'Determine consequence of outcome and place in Last Throw Winnings
+Select Case Cells(2, 2)
+    Case 1
+        Cells(5, 2) = 1
+    Case 2
+        Cells(5, 2) = -2
+    Case 3
+        Cells(5, 2) = 1
+    Case 4
+        Cells(5, 2) = 0
+    Case 5
+        Cells(5, 2) = 1
+    Case 6
+        Cells(5, 2) = -1.5
+End Select
+'Adjust balance by result of last throw
+Cells(4, 2) = Cells(4, 2) + Cells(5, 2)
+'Increment ThrowCount
+Cells(6, 2) = Cells(6, 2) + 1
+End Sub
+Sub RunToZero()
+'''This routine will run ThrowDie until the balance is ‘’’zero, or until it reaches 10,000
+While Cells(4, 2) > 0 And Cells(4, 2) < 1000
+    Call ThrowDie
+Wend
+If Cells(4, 2) >= 1000 Then
+    MsgBox ("It looks like this won't go to zero")
+End If
+End Sub
+
+Sub restart()
+‘’'This routine will reset the balance to $100 and ‘’’clear the throw count
+Cells(2, 2) = ""
+Cells(4, 2) = 100
+Cells(5, 2) = 0
+Cells(6, 2) = 0
+End Sub
+
+Sub ThrowTimes()
+'''This routine will run the ThrowDie sub however many times the user specifies
+'Get number of throws from user
+Dim throwNumber As Integer
+throwNumber = InputBox("How many times would you like to throw the die", "Enter an integer")
+While throwNumber > 0
+    Call ThrowDie
+    throwNumber = throwNumber - 1
+Wend
+End Sub
